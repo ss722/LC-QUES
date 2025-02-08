@@ -1,0 +1,32 @@
+class NumberContainers {
+public:
+ map<int,int> mp;
+ map< int,priority_queue<int , vector<int> , greater<int> >> minn;
+    NumberContainers() {
+       
+    }
+    
+    void change(int index, int number) {
+        mp[index] = number;
+        minn[number].push(index);
+    }
+    
+    int find(int number) {
+        if(minn.find(number) != minn.end()) {
+            while(!minn[number].empty()){
+                int val = minn[number].top();
+                if( mp[val]  == number ) return val;
+                minn[number].pop();
+            }
+        } 
+        return -1;
+
+    }
+};
+
+/**
+ * Your NumberContainers object will be instantiated and called as such:
+ * NumberContainers* obj = new NumberContainers();
+ * obj->change(index,number);
+ * int param_2 = obj->find(number);
+ */
