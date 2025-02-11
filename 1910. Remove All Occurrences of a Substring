@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string removeOccurrences(string s, string part) {
+        string v;
+        int curr_ind = 0;
+        for(auto c:s){
+           v += c;
+           curr_ind++;
+
+           if( c == part[part.size()-1] && v.size() >= part.size() ){
+                int i = curr_ind-1 , j = part.size()-1;
+
+                while(j >= 0 && v[i] == part[j]){
+                    i--;j--;
+
+                } 
+                if(j<0) {
+                    v.erase(i+1);
+                    curr_ind = i+1;
+                    }
+           }
+        }
+        return v.substr(0,curr_ind);
+    }
+};
