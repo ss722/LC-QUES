@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int maximumSum(vector<int>& nums) {
+        vector<int> v(82,-1);
+        int ans = -1;
+        for(auto num:nums){
+            int sum = 0;
+            int temp = num;
+            while(temp){
+                sum += temp%10;
+                temp = temp/10;
+            }
+            if(v[sum] != -1){
+                ans = max(ans,v[sum] + num);
+            }
+            v[sum] = max(v[sum] , num);
+            
+        }   
+        return ans;
+    }
+};
