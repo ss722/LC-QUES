@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool dfs(vector<int>&res,vector<bool>&vis,int i,int n){
+        if(i==res.size())return true;
+        if(res[i] != 0) return dfs(res,vis,i+1,n);
+
+        for(int num = n; num>=1 ; num-- ){
+            int secondind = (num==1) ? i : i+num;
+            if(vis[num] || (num>1 && (secondind >= res.size() || res[secondind] != 0 ))){
+                continue;
+            }  
+            vis[num] = true;
+            res[i] = res[secondind] = num;
+            if(dfs(res,vis,i+1,n)) return true;
+            vis[num] = false;
+            res[i] = res[secondind] = 0;
+        }
+        return false;
+    }
+    vector<int> constructDistancedSequence(int n) {
+        vector<bool> vis(n+1,false);
+        vector<int> res(n*2 -1,0);
+        dfs(res,vis,0,n);
+        return res;
+    }
+};
