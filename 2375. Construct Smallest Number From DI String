@@ -1,0 +1,25 @@
+class Solution {
+public:
+    
+    string smallestNumber(string pattern) {
+
+        stack<int> s;
+        string ans = "";
+        int n = pattern.size();
+        char c = '1';
+        s.push(c++);
+        for(int i=0;i<n;i++){
+            if(pattern[i]=='I'){
+                while(!s.empty()) {ans += s.top();s.pop();}
+                s.push(c++);
+            }
+            else{
+                s.push(c++);
+            }
+        }
+        while(!s.empty()) {ans += s.top();s.pop();}
+
+        return ans;
+    
+    }
+};
