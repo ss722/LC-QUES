@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<string> v;
+    void f(int n,int k,char last,string s){
+        if(s.size()==n) {
+            v.push_back(s); 
+            return;
+            }
+
+        for(char c ='a';c<='c';c++){
+            if(last == c) continue;
+            
+            f(n,k,c,s+c);
+        }
+
+    }
+    string getHappyString(int n, int k) {
+        
+       f(n,k,'d',"");
+       for(auto it:v)cout<<it<<" ";
+       if(v.size()<k) return "";
+       else return v[k-1]; 
+
+    }
+};
