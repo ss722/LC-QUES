@@ -1,0 +1,18 @@
+class Solution {
+public:
+    set<string> sett;string ans="";
+    void f(vector<string>& nums,string s){
+        if(s.size()==nums[0].size()){
+            if(sett.find(s) == sett.end()) ans = s;
+            return;
+        }
+        if(ans != "")return;
+        f(nums,s+'0');
+        f(nums,s+'1');
+    }
+    string findDifferentBinaryString(vector<string>& nums) {
+        for(auto it:nums)sett.insert(it);
+        f(nums,"");
+        return ans;
+    }
+};
