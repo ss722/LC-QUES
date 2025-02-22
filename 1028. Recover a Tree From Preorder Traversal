@@ -1,0 +1,33 @@
+
+class Solution {
+public:
+    TreeNode* recoverFromPreorder(string traversal) {
+        int i=0;int n = traversal.size();
+        stack<TreeNode*> s;
+        while(i<n){
+            int dash = 0;     
+            while(i<n && traversal[i]=='-'){
+                dash++;
+                i++;
+                continue;
+            }
+
+            int val = 0;
+            while(i<n && isdigit(traversal[i])){
+                val = val*10 + (traversal[i++]-'0');
+            }
+
+            TreeNode* node = new TreeNode(val);
+
+            while(s.size() > dash) s.pop();
+
+            if(!s.empty()){
+                if(!s.top()->left) s.top()->left = node;
+                else s.top()->right = node;
+            }
+            s.push(node);
+        }
+        while(s.size()>1) s.pop();
+        return s.top();
+    }
+};
