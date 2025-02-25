@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int numOfSubarrays(vector<int>& arr) {
+        long long ans  = 0;
+        int even = 0,odd = 0;
+        long long sum = 0;
+        for(auto a:arr){
+            sum+=a;
+            if(sum%2==1){
+            // This +1 is for its own sum till now , even will track till previous even occurence
+                ans += even+1;
+                odd++;
+            }else{
+                ans += odd;
+                even++;
+            }
+            ans%(long long)(1e9+7);
+        }
+        return ans%(long long)(1e9+7);
+
+    }
+};
