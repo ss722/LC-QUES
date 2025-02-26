@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maxAbsoluteSum(vector<int>& nums) {
+        int pos=0,neg=0;
+        int ans = 0;
+
+        for(auto v:nums){
+            pos+= v;
+            neg+= v;
+            ans = max(ans,max( abs(pos),abs(neg) ));
+            if(pos<=0) pos=0;
+            if(neg>=0) neg = 0;
+        }
+        return ans;
+    }
+
+};
