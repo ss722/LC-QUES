@@ -11,9 +11,11 @@ public:
     int orangesRotting(vector<vector<int>>& grid) {
         int m = grid.size();
         int n = grid[0].size();
+        int total = 0;
         vector<vector<bool>> vis(m,vector<bool>(n,false));
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
+                if(grid[i][j]!= 0)total++;
                 if(grid[i][j]==2) {
                     vis[i][j]=true;
                     q.push({i,j});
@@ -21,9 +23,11 @@ public:
             }
         }
         int min= -1;
+        int count = 0;
         while(!q.empty()){
             min++;
             int qsize = q.size();
+            count+= qsize;
             for(int it=0;it<qsize;it++){
                 auto[i,j] = q.front();q.pop();
                 mark(grid,vis,m,n,i+1,j);
@@ -32,13 +36,7 @@ public:
                 mark(grid,vis,m,n,i,j-1);
             }   
         }
-         for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(grid[i][j]==1 && !vis[i][j]) {
-                    return -1;
-                }
-            }
-        }
+        if(total !=count) return -1;
         return max(0,min);
 
     }
