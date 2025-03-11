@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int ans = 0;
+    queue<pair<int,int>> q;
+    void mark(vector<vector<int>>& grid,vector<vector<bool>>& vis,int m,int n,int i , int j){    
+        if(i>=0 && j>=0 && i<m && j<n && grid[i][j]==1 && !vis[i][j]){
+            vis[i][j] = true;
+            q.push({i,j});
+        }
+    }
+    int orangesRotting(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<bool>> vis(m,vector<bool>(n,false));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==2) {
+                    vis[i][j]=true;
+                    q.push({i,j});
+                }
+            }
+        }
+        int min= -1;
+        while(!q.empty()){
+            min++;
+            int qsize = q.size();
+            for(int it=0;it<qsize;it++){
+                auto[i,j] = q.front();q.pop();
+                mark(grid,vis,m,n,i+1,j);
+                mark(grid,vis,m,n,i,j+1);
+                mark(grid,vis,m,n,i-1,j);
+                mark(grid,vis,m,n,i,j-1);
+            }   
+        }
+         for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1 && !vis[i][j]) {
+                    return -1;
+                }
+            }
+        }
+        return max(0,min);
+
+    }
+};
