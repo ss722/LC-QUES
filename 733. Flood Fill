@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void f(vector<vector<int>>& v,vector<vector<bool>>& vis, int i, int j, int color,int startcolor){
+        int m = v.size();
+        int n = v[0].size();
+        if(i>=0 && j>=0 && i<m && j<n && v[i][j]==startcolor && !vis[i][j] ){
+            vis[i][j] = true;
+            v[i][j] = color;
+            f(v,vis,i+1,j,color,startcolor);
+            f(v,vis,i,j+1,color,startcolor);
+            f(v,vis,i,j-1,color,startcolor);
+            f(v,vis,i-1,j,color,startcolor);
+        }
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        vector<vector<int>> v = image;
+        vector<vector<bool>> vis(v.size(),vector<bool>(v[0].size(),false));
+        int startcolor = image[sr][sc];
+        f(v,vis,sr,sc,color,startcolor);
+        return v;
+    }
+};
