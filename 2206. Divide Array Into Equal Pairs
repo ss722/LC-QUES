@@ -1,0 +1,10 @@
+class Solution {
+public:
+    bool divideArray(vector<int>& nums) {
+        int xorr = 0;
+        vector<int> v(501,0);
+        for(auto it:nums)v[it]++;
+        for(auto it:v) if(it%2==1)return false;
+        return true;      
+    }
+};
