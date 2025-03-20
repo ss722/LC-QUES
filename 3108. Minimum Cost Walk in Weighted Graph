@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<int> minimumCost(int n, vector<vector<int>>& edges, vector<vector<int>>& query) {
+        vector<vector<pair<int,int>>> adj(n);
+        for(auto& e:edges){
+            adj[e[0]].push_back({e[1],e[2]});
+            adj[e[1]].push_back({e[0],e[2]});
+        }
+
+        vector<int> cost(n,-1); 
+        queue<int> q;
+        int group = 0;
+        vector<int> component(n,-1);
+        for(int i=0;i<n;i++){
+            if(component[i]==-1){
+                q.push(i);
+                component[i]=group;
+                int andval = INT_MAX;
+                while(!q.empty()){
+                    int node = q.front();q.pop();
+                    for(auto [nei,w]:adj[node]){
+                        andval &= w;
+                        if(component[nei]== -1 ){
+                        q.push(nei);
+                        component[nei]=group;
+                        
+                        }
+                    }
+                  
+                }
+                cost[group] = andval;
+                group++;
+            }
+            
+        }
+        vector<int> ans;
+        for(int i=0;i<query.size();i++){
+            int a = query[i][0];
+            int b = query[i][1];
+            if(component[a]!=component[b])ans.push_back(-1);
+            else ans.push_back(cost[component[a]]);
+        }
+        return ans;
+
+    }
+};
