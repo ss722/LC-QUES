@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool checkValidCuts(int n, vector<vector<int>>& rectangles) {
+        vector<pair<int,int>> xv;
+        vector<pair<int,int>> yv;
+        for(auto it:rectangles){
+            int a=it[0],b=it[1],c=it[2],d=it[3];
+            xv.push_back({a,c});
+            yv.push_back({b,d});
+        }
+        sort(xv.begin(),xv.end());
+        sort(yv.begin(),yv.end());
+
+        int xlast=-1,ylast=-1;
+        int xcnt=0,ycnt=0;
+        for(int i=0;i<xv.size();i++){
+            if(xlast == -1 || xlast <= xv[i].first)
+            {
+                xlast = xv[i].second;
+                xcnt++;
+            }
+            else{
+                xlast = max(xlast,xv[i].second);
+            }
+
+            if(ylast == -1 || ylast <= yv[i].first)
+            {
+                ylast = yv[i].second;
+                ycnt++;
+            }
+            else{
+                ylast = max(ylast,yv[i].second);
+            }
+        }
+        return xcnt >= 3 || ycnt >=3;
+    }
+};
