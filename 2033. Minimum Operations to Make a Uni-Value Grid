@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int minOperations(vector<vector<int>>& grid, int x) {
+        vector<int> v;
+        for(auto r:grid){
+            for(auto c:r){
+                v.push_back(c); 
+            }
+        }
+        sort(v.begin(),v.end());
+        for(int i=0;i<v.size();i++){
+            if((v[i]-v[0])%x != 0) return -1;
+        }
+
+        int steps = 0;
+        int mid = v[v.size()/2];
+
+        for(auto it:v){
+            steps+= abs(mid-it)/x;
+        }
+        
+        return steps;
+    }
+};
