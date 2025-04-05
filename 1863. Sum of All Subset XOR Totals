@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int f(vector<int>& nums,int i,int xorr){
+        if(i==nums.size()) return xorr;
+
+        int pick = f(nums,i+1,xorr^nums[i]);
+        int notpick = f(nums,i+1,xorr);
+
+        return pick+notpick;
+
+    }
+    int subsetXORSum(vector<int>& nums) {
+        int sum = f(nums,0,0);
+        return sum;
+    }
+};
