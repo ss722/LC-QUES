@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int n =nums.size();
+        int sum = 0;
+        for(auto it:nums)sum+=it;
+        if(sum%2!=0)return false;
+        vector<bool> dp((sum/2)+1,false);
+        dp[0] = true;
+
+        for(auto num:nums){
+            for(int ind = sum/2;ind>=num;ind--){
+                dp[ind] = dp[ind] || dp[ind-num];
+            }
+        }
+        return dp[sum/2];
+
+    }
+};
