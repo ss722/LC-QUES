@@ -1,0 +1,58 @@
+class Solution {
+public:
+    vector<long long> fact;
+    set<string> sett;
+    long long ans = 0;
+
+   // generate numbers that are palindrome 
+    //check if its kpalindrome 
+    //if yes , then add all permutations for that accordingly 
+
+    bool iskpalindrome(string s,int k){
+        if( stoll(s) % k == 0 )return true;
+        return false;
+    }
+    long long calcpermutation(int n,map<char,long long> mp){
+        long long val = fact[n];
+        for(auto it:mp){
+          val /= fact[it.second];
+        }
+        return val;
+    }
+    long long calcgood(string s,int n,int k){
+        sort(s.begin(),s.end());
+        if(sett.find(s) != sett.end()) return 0;
+        sett.insert(s);
+
+        map<char,long long> mp;
+        for(auto it:s) mp[it]++;
+        long long total = calcpermutation(n,mp);
+        long long zerostart = 0;
+        if(mp['0']>0) {
+            mp['0']--;
+            zerostart = calcpermutation(n-1,mp);
+        }
+        return total-zerostart;
+    }
+    void generate(int ind,string s,int n, int k){
+        if(ind >= (n+1)/2){
+            if(iskpalindrome(s,k)) ans += calcgood(s,n,k);
+            return;
+        }
+
+        char val = ind==0 ? '1' : '0';
+        while(val <= '9'){
+            s[ind] = val;
+            s[n-ind-1] = val;
+            generate(ind+1,s,n,k);
+            val++;
+        }
+    }
+    long long countGoodIntegers(int n, int k) {
+        fact = vector<long long>(11,1);
+        for(int i=1;i<=n;i++) fact[i] = fact[i-1]*i;
+        string s(n,' ');
+        generate(0,s,n,k);
+        return ans;
+    }
+};
