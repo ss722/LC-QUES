@@ -1,0 +1,21 @@
+class Solution {
+public:
+
+    long long countGood(vector<int>& nums, int k) {
+        unordered_map<int,int> mp;
+        int n = nums.size();
+        int i = 0;
+        long long curr=0,ans=0;
+        int left  = 0;
+        while(i<n){
+            curr += mp[nums[i]]++;
+            while(curr>=k){
+                ans += (n-i);
+                curr -= --mp[nums[left]];
+                left++;
+            }    
+            i++;       
+        }
+        return ans;
+    }
+};
