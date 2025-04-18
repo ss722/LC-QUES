@@ -1,0 +1,31 @@
+class Solution {
+public:
+    string f(string s){
+        int i=1;
+        int cnt = 1;
+        char last = s[0];
+        string ans = "";
+        int n = s.size();
+        while(i<n){
+            while(i<n && s[i]==last){
+                i++;
+                cnt++;
+            }
+            ans+= to_string(cnt);
+            ans+= s[i-1];
+            cnt = 0;
+            if(i>=n)break;
+            last = s[i];
+        }
+        return ans;
+    }
+    string countAndSay(int n) {
+        if(n==1) return "1";
+        if(n==2) return "11";
+        string ans = "11";
+        for(int i=2;i<n;i++){
+            ans = f(ans);
+        }
+        return ans;
+    }
+};
