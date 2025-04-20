@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int numRabbits(vector<int>& answers) {
+        map<int,int>mp;
+        for(auto it:answers){
+            mp[it]++;
+        }   
+        int ans = 0;
+        for(auto [a,b]:mp){
+            int total_rabbit = a+1;
+            if(a==0) ans += b;
+            else if(a+1 >= b) ans += a+1;
+            else{
+               int groups = b/total_rabbit;
+               if(b%total_rabbit != 0) groups++;
+               ans+= groups*total_rabbit; 
+            }
+
+        }
+        return ans;
+    }
+};
