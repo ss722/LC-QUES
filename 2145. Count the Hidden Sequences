@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int numberOfArrays(vector<int>& differences, int lower, int upper) {
+        long long minn = INT_MAX,maxx = INT_MIN;
+        
+        long long last = lower;
+        minn = min(minn, last);
+        maxx = max(maxx, last);
+        for(auto it:differences){
+            long long curr = last + it;
+            minn = min(minn, curr);
+            maxx = max(maxx, curr);
+            last = curr;
+        }
+        long long curr_window = maxx - minn;
+        long long allowed_window = upper - lower;
+
+        if(allowed_window < curr_window) return 0;
+        else return allowed_window - curr_window + 1;
+    }
+};
