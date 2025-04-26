@@ -1,0 +1,17 @@
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int mink, int maxk) {
+        int maxind = -1,minind=-1,start = 0;
+        long long ans = 0;
+        int n = nums.size();
+        for(int i=0;i<n;i++){
+            if(nums[i]==mink) minind = i;
+            if(nums[i]==maxk) maxind = i;
+            if(nums[i] < mink || nums[i]>maxk) start = i+1;
+            if(minind != -1 && maxind != -1){
+                ans += max(0,min(minind,maxind) - start + 1);
+            }
+        }
+        return ans;
+    }
+};
