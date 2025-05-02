@@ -1,7 +1,8 @@
 class Solution {
 public:
     string pushDominoes(string dom) {
-        unordered_map<int,int> right,left;
+        int n=dom.size();
+        vector<int> right(n,INT_MAX),left(n,INT_MAX);
 
         int i=0;
         while(i<dom.size()){
@@ -34,12 +35,8 @@ public:
 
         string s="";
         for(int i=0;i<dom.size();i++){
-
-            int rightval = right.find(i) != right.end() ? right[i] : INT_MAX;
-            int leftval = left.find(i) != left.end() ? left[i] : INT_MAX;
-
-                if(rightval == leftval) s+='.';
-                else if(rightval < leftval ) s+='R';
+                if(left[i]==right[i]) s+='.';
+                else if(right[i] < left[i] ) s+='R';
                 else s+='L';
         }
         return s;
