@@ -1,0 +1,49 @@
+class Solution {
+public:
+    string pushDominoes(string dom) {
+        unordered_map<int,int> right,left;
+
+        int i=0;
+        while(i<dom.size()){
+            if(dom[i]=='R'){
+                int val = 1;
+                while(i<dom.size() && dom[i] != 'L' )
+                {
+                    if(dom[i]=='R') val = 1;
+                    right[i]=val;
+                    val++;
+                    i++;
+                }
+            }
+            i++;
+        }
+        i = dom.size()-1; 
+        while(i>=0){
+            if(dom[i]=='L'){
+                int val = 1;
+                while(i>=0 && dom[i] != 'R' )
+                {
+                    if(dom[i]=='L') val = 1;
+                    left[i]=val;
+                    val++;
+                    i--;
+                }
+            }
+            i--;
+        }
+
+        string s="";
+        for(int i=0;i<dom.size();i++){
+
+            int rightval = right.find(i) != right.end() ? right[i] : INT_MAX;
+            int leftval = left.find(i) != left.end() ? left[i] : INT_MAX;
+
+                if(rightval == leftval) s+='.';
+                else if(rightval < leftval ) s+='R';
+                else s+='L';
+        }
+        return s;
+
+    }
+};
+
