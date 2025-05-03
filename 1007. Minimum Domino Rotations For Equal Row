@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int f(int val,vector<int>& tops, vector<int>& bottoms){
+        int top=0,bottom=0;
+        for(int i=0;i<tops.size();i++){
+            if(tops[i] != val && bottoms[i] != val) return -1;
+            if(tops[i] != val) top++;
+            if(bottoms[i] != val) bottom++;
+        }
+        return min(top,bottom);
+    }
+    int minDominoRotations(vector<int>& tops, vector<int>& bottoms) {
+        int n = tops.size();
+        int first = f(tops[0],tops,bottoms);
+        int second =f(bottoms[0],tops,bottoms);
+        if(first == -1 && second == -1) return -1;
+        if(first != -1 && second != -1) return min(first,second);
+        if(first != -1) return first;
+        else return second;
+
+    }
+};
