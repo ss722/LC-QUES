@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> findEvenNumbers(vector<int>& digits) {
+        vector<int> mp(10,0);
+        vector<int>ans;
+
+        for(auto &it:digits) mp[it]++;
+        
+        for(int i=100;i<1000;i+=2){
+            int f = i%10;
+            int s = (i/10)%10;
+            int t = i/100;
+
+            mp[f]--,mp[s]--,mp[t]--;
+            if(mp[f]>=0 && mp[s]>=0 && mp[t]>=0) ans.push_back(i);
+            mp[f]++,mp[s]++,mp[t]++;
+        }
+        return ans;
+    }
+};
