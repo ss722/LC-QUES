@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> dp; 
+    int MOD = 1e9+7;
+    int f(int m,int n,int r,int c,int curr,int prev){
+        if(c==n) return 1;
+        if(r==m) return f(m,n,0,c+1,0,curr);
+        if(dp[c][prev] != -1) return dp[c][prev];
+
+        int up=0;
+        if(r>0) up = curr&3;
+        int left =  (prev>>((m-r-1)*2)) & 3;
+
+        int cnt = 0;
+        for(int i=1;i<=3;i++){
+            if(up != i && left != i){
+                cnt = (cnt + f(m,n,r+1,c,((curr<<2) + i),prev))%MOD;
+            }
+        }
+        if(r==0) dp[c][prev]=cnt;
+        return cnt;
+
+    }
+    int colorTheGrid(int m, int n) {
+        dp.resize(1002,vector<int>(1023,-1));
+        return f(m,n,0,0,0,0);
+    }
+};
