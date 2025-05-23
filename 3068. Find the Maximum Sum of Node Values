@@ -1,0 +1,18 @@
+class Solution {
+public:
+    long long maximumValueSum(vector<int>& nums, int k, vector<vector<int>>& edges) {
+        long long sum = 0,cnt= 0,min_diff = INT_MAX;
+
+        for(long long it:nums){
+            sum += max(it,it^k);
+            if((it^k) > it) cnt++;
+            min_diff = min( min_diff , abs(it-(it^k)) );
+        }
+        if(cnt%2==0)return sum;
+        return sum - min_diff;
+    }
+};
+
+
+
+
