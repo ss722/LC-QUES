@@ -1,0 +1,22 @@
+class Solution {
+public:
+    
+    int longestPalindrome(vector<string>& words) {
+        vector<vector<int>> v(26,vector<int>(26,0));
+
+        int ans =0;
+
+        for(int i=0;i<words.size();i++){
+            int x = words[i][0]-'a';
+            int y = words[i][1]-'a';
+
+            if(v[y][x] > 0) ans+=4,v[y][x]--;
+            else v[x][y]++; 
+        }
+        for(int i=0;i<26;i++){
+            if(v[i][i]) {ans+=2;break;}
+        }
+        return ans;
+    }
+};
+
