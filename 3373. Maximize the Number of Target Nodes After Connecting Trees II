@@ -1,0 +1,39 @@
+class Solution {
+public:
+    void make_adj(vector<vector<int>>& adj,vector<vector<int>>& edges){
+        for(auto it:edges){
+            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
+        }
+    }
+    void f(int u,vector<vector<int>>& adj,vector<int> &gra,int parent,int &even,int &odd){
+        if(gra[u]==0) even++;
+        else odd++;
+        for(auto &v:adj[u]){
+            if(v!=parent){gra[v] = gra[u] ^ 1;
+            f(v,adj,gra,u,even,odd);}
+        }
+    }
+    vector<int> maxTargetNodes(vector<vector<int>>& edges1, vector<vector<int>>& edges2) {
+        int n=edges1.size()+1,m=edges2.size()+1;
+        vector<vector<int>> adj1(n),adj2(m);
+        make_adj(adj1,edges1);
+        make_adj(adj2,edges2);
+
+        vector<int> gra1(n,-1),gra2(m,-1);
+        gra1[0] = 0;
+        gra2[0] = 0;
+        int even1=0,even2=0,odd1=0,odd2=0;
+
+        f(0,adj1,gra1,-1,even1,odd1);
+        f(0,adj2,gra2,-1,even2,odd2);
+
+        vector<int> ans(n);
+
+        for(int i=0;i<n;i++){
+            ans[i] = (gra1[i]==0 ? even1 : odd1) + max(even2,odd2);
+        }
+        return ans;
+
+    }
+};
