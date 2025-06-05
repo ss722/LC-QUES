@@ -1,0 +1,38 @@
+class Solution {
+public:
+    string smallestEquivalentString(string s1, string s2, string baseStr) {
+        int n =s1.size();
+        vector<char> v(26);
+
+        vector<vector<int>> adj(26);
+        vector<bool> vis(26,false);
+        for(int i=0;i<n;i++){
+            int c1 = s1[i]-'a';
+            int c2 = s2[i]-'a';
+
+            adj[c1].push_back(c2);  
+            adj[c2].push_back(c1);
+  
+        }
+        for(int i=0;i<26;i++){
+            int curr = 'a'+i;
+            queue<int> q;
+            q.push(i);
+            while(!q.empty()){
+                int val = q.front();q.pop();
+                if(!vis[val]) 
+                {
+                v[val] = curr;
+                for(auto it:adj[val]) q.push(it);
+                }
+                vis[val] = true;
+            }
+
+        }
+        string ans = "";
+        for(int i=0;i<baseStr.size();i++){
+            ans += v[baseStr[i]-'a'];
+        }
+        return ans;
+    }
+};
