@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int maxDiff(int num) {
+        
+        string  s1 = to_string(num);
+        string s2=s1;
+        auto pos = s1.find_first_not_of('9');
+        if(pos!=string::npos){
+            char c = s1[pos];
+            replace(s1.begin(),s1.end(),c,'9');
+        }
+       
+        char c = s2[0];
+        if(c!='1') replace(s2.begin(),s2.end(),c,'1');
+        else{
+
+            int pos = -1;
+            for(int i=1;i<s2.size();i++){
+                if(s2[0] != s2[i] && s2[i] != '0'){
+                    pos = i;
+                    break;
+                }
+            }
+            if(pos!=-1){
+            c = s2[pos];
+            replace(s2.begin(),s2.end(),c,'0');
+            }
+        }
+        return stoi(s1)-stoi(s2); 
+    }
+};
