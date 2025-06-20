@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxDistance(string s, int k) {
+        int x=0,y=0;
+        int ans  =0 ;
+        for(int i=0;i<s.size();i++){
+            if(s[i]=='N') y++;
+            else if(s[i]=='S')y--;
+            else if(s[i]=='E')x++;
+            else x--;
+
+            int MD = abs(x)+abs(y);
+            int curr =  min(k*2 + MD , i+1) ;
+            ans = max(ans,curr);
+
+        }
+        return ans;
+    }
+};
