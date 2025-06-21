@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int minimumDeletions(string word, int k) {
+        vector<int> v(26,0);
+
+        for(auto &it:word) v[it-'a']++;
+
+        // vector<int> v;
+        // for(auto &it:freq) if(it>0){v.push_back(it);}
+
+        int ans= INT_MAX ;
+
+        sort(v.begin(),v.end());
+        int last = 0;
+        for(int i=0;i<v.size();i++){
+            if(v[i]==0) continue;
+           int cnt = last;
+            for(int j=i+1;j<v.size();j++){
+                if(v[j]==0)continue;
+                if(abs(v[i]-v[j]) > k){
+                    cnt += abs(v[i]-v[j])-k;
+                }
+            }
+            last += v[i];
+            ans = min(ans,cnt);
+        }
+        return ans;
+    }
+};
