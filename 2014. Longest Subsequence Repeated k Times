@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool f(string curr,string s,int k){
+        int i=0;int count =0;
+        for(auto c:s){
+            if(c==curr[i]){
+                i++;
+                if(i==curr.size()){
+                    count++;
+                    i=0;
+                    if(count==k) return true;
+                }
+                
+            }
+        }
+        return false;
+    }
+    string longestSubsequenceRepeatedK(string s, int k) {
+        int n =s.size();
+        string max_str ="";
+
+        queue<string> q;
+        q.push("");
+        while(!q.empty()){
+            string curr = q.front();q.pop();
+            for(char c='a';c<='z';c++){
+                string next = curr + c;
+                if(f(next,s,k)){
+                    max_str = next;
+                    q.push(next);
+                }
+            }
+        }
+        return  max_str;
+    }
+    
+};
