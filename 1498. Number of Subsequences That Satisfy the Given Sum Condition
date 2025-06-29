@@ -1,0 +1,33 @@
+class Solution {
+public:
+    long long MOD = 1e9+7;
+    int f(int low,int high,int target,vector<int>& nums){
+        int ind = -1;
+        while(low<=high){
+            long long mid = (low+high)/2;
+            if(nums[mid] <=target){
+                ind = mid;
+                low = mid+1;
+            } 
+            else high = mid-1;
+        }
+        return ind;
+    }
+    int numSubseq(vector<int>& nums, int target) {
+        sort(begin(nums),end(nums));
+        long long ans = 0;
+        int n = nums.size();
+        vector<long long> pow_vec(n+1,1);
+        for(int i=1;i<=n;i++){
+            pow_vec[i] = (pow_vec[i-1]*2)%MOD;
+        }
+        for(int i=0;i<nums.size();i++){
+            int ind = f(i,nums.size()-1,target-nums[i],nums);
+            if(ind==-1) break;
+          
+            ans= (ans + pow_vec[ind-i])%MOD;
+        }
+        return ans;
+    }
+};
+
