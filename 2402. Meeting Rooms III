@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int mostBooked(int n, vector<vector<int>>& meetings) {
+        priority_queue<long long,vector<long long>,greater<long long>> free;
+        priority_queue<pair<long long,long long>,vector<pair<long long,long long>>,greater<pair<long long,long long>>>booked;
+        sort(meetings.begin(),meetings.end());
+        
+        vector<long long> cnt(n,0);
+        for(long long i=0;i<n;i++)free.push(i);
+        
+        for(long long i=0;i<meetings.size();i++){
+            while(!booked.empty() && meetings[i][0]>=booked.top().first){
+                auto[endtime,room] = booked.top();booked.pop();
+                free.push(room); 
+            }
+            if(!free.empty()){
+                long long room = free.top();free.pop();
+                booked.push({meetings[i][1],room});
+                cnt[room]++;
+            }
+            else{
+                auto[endtime,room] = booked.top();booked.pop();
+                booked.push({endtime+(meetings[i][1]-meetings[i][0]),room});
+                cnt[room]++;
+            }
+        }
+        return max_element(begin(cnt),end(cnt)) - begin(cnt);
+
+    }
+};
