@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool isValid(string word) {
+        bool vov=false,con=false;
+        
+        if(word.size()<3)return false;
+        for(int i=0;i<word.size();i++){
+            if((word[i]>='a' && word[i]<='z') || (word[i]>='A' && word[i]<='Z')){
+                // vov con
+                if(
+                    word[i] == 'a' ||
+                    word[i] == 'e' ||
+                    word[i] == 'i' ||
+                    word[i] == 'o' ||
+                    word[i] == 'u' ||
+                    word[i] == 'A' ||
+                    word[i] == 'E' ||
+                    word[i] == 'I' ||
+                    word[i] == 'O' ||
+                    word[i] == 'U' 
+                
+                )vov=true;
+                else con=true;
+            }
+            else if(word[i]>='0'&& word[i]<='9')continue;
+            else return false;
+        }
+        if(vov && con)return true;
+        return false;
+    }
+};
