@@ -1,0 +1,47 @@
+class Solution {
+public:
+    long long minimumDifference(vector<int>& nums) {
+        priority_queue<int,vector<int>,greater<int>> minpq;
+        priority_queue<int> maxpq;
+        long long size = nums.size();
+        long long n = size/3;
+        vector<long long> v1(size,0),v2(size,0);
+        long long ans =LONG_LONG_MAX;
+        
+        long long cnt1=0,cnt2=0;
+       
+        for(long long i=0;i<size;i++){
+            if(maxpq.size()==n && nums[i]>maxpq.top()){
+                v1[i] = cnt1;
+                continue;
+            } 
+            maxpq.push(nums[i]);
+            cnt1+=nums[i];
+            if(maxpq.size()>n){
+            long long curr = maxpq.top();
+            maxpq.pop();
+            cnt1-=curr;
+            }
+            v1[i] = cnt1;
+        }
+        for(long long i=size-1;i>=0;i--){
+            if(minpq.size()==n && nums[i]<=minpq.top()){
+                v2[i] = cnt2;
+                continue;
+            } 
+            minpq.push(nums[i]);
+            cnt2+=nums[i];
+            if(minpq.size()>n){
+            long long curr = minpq.top();
+            minpq.pop();
+            cnt2-=curr;
+            }
+            v2[i] = cnt2;
+        }
+
+        for(long long i=n-1;i<size-n;i++){
+            ans = min(ans,(long long)(v1[i]-v2[i+1]));
+        }
+        return ans;
+    }
+};
