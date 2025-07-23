@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int maximumGain(string s, int x, int y) {
+        string priority="";
+        if(x>y) priority = "ab";
+        else priority = "ba";
+        int a=0,b=0,sum=0;
+        int n = s.size();
+        // cout<<priority<<endl;
+        for(int i=0;i<=n;i++){
+            if(i==n || (s[i]!='a' && s[i]!='b')){
+                // calculate sum
+                if(priority[1]=='b'){
+                    sum+= min(a,b) * y;
+                }
+                else if(priority[1]=='a'){
+                    sum+= min(a,b) * x;
+                }
+                //make a and b zero
+                a=0,b=0;
+            }
+            else{
+                if(s[i]=='a')a++;
+                else if(s[i]=='b')b++;
+                
+                if(priority[1]=='a' && s[i]=='a' && b>0){
+                    b--;a--;
+                    sum+=y;
+                }
+                else if(priority[1]=='b' && s[i]=='b' && a>0){
+                    b--;a--;
+                    sum+=x;
+                }
+            }
+            // cout<<a<<" "<<b<<" sum: "<<sum<<endl;
+        }
+        return sum;
+    }
+};
