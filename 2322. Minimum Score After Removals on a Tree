@@ -1,0 +1,68 @@
+class Solution {
+public:
+    vector<vector<int>> adj;
+    vector<int> xorr;
+    vector<unordered_set<int>> des;
+
+    void dfs(int node,int parent,vector<int>& nums){
+        des[node].insert(node);
+        xorr[node] = nums[node];
+
+        for(auto nei : adj[node] ){
+            if(nei != parent){
+                dfs(nei,node,nums);
+                des[node].insert(des[nei].begin(),des[nei].end());
+                xorr[node] = xorr[node] ^ xorr[nei];
+            }
+        }
+
+    }
+
+    int minimumScore(vector<int>& nums, vector<vector<int>>& edges) {
+        int n= nums.size();
+
+        adj.assign(n,vector<int>());
+        xorr.assign(n,0);
+        des.assign(n,unordered_set<int>());
+        for(auto edge:edges){
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
+        }
+        dfs(0,-1,nums);
+        int min_diff = INT_MAX;
+        int total_xorr = xorr[0];
+
+        for(int i=1;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                int xorr_i = xorr[i];
+                int xorr_j = xorr[j];
+                int val1,val2,val3;
+
+                if(des[i].count(j)){
+                    val1 =  xorr_j;
+                    val2 = xorr_j ^ xorr_i;
+                    val3 = total_xorr^xorr_i;
+                }
+                else if(des[j].count(i)){
+                    val1 =  xorr_i;
+                    val2 = xorr_j ^ xorr_i;
+                    val3 = total_xorr^xorr_j;
+                }
+                else{
+                    val1 = xorr_i;
+                    val2 = xorr_j;
+                    val3 = total_xorr ^ xorr_i ^ xorr_j;
+                }
+
+
+                min_diff = min(min_diff,(max({val1,val2,val3}) - min({val1,val2,val3})) );
+
+
+            }
+        }
+        return min_diff;
+
+
+
+    }
+};
