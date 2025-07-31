@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int subarrayBitwiseORs(vector<int>& arr) {
+       
+        std::unordered_set<int>  curr,res;
+        // curr will store all possible xors till i
+        // res will store total numbers of distinct ans
+        // next will store all current xors with previous possibilities
+        for(int i=0;i<arr.size();i++){
+            unordered_set<int> next;
+            next.insert(arr[i]);
+
+            for(auto it:curr){
+                next.insert(arr[i] | it);
+            }
+
+            res.insert(begin(next),end(next));
+            curr=next;
+
+        }
+        return res.size();
+    }
+};
