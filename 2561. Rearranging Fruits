@@ -1,0 +1,29 @@
+class Solution {
+public:
+    long long minCost(vector<int>& basket1, vector<int>& basket2) {
+        unordered_map<int,int> mp;
+
+        for(auto it:basket1)mp[it]++;
+        for(auto it:basket2)mp[it]--;
+        ///take diff in cnt, then add in v so that we can operate on those values
+        vector<int> v;
+        int minn=INT_MAX;
+        for(auto [a,b]:mp){
+            if(abs(b)%2==1) return -1;
+            for(int i=0;i<abs(b)/2;i++){
+                v.push_back(a);
+            }
+            minn = min(minn,a);
+        }
+
+        sort(begin(v),end(v));
+
+        long long ans = 0;
+        // v[i] will be smallest , but maybe the smaller element existing there in array can be swapped two times for optimal swap , so we can use that as well
+        for(int i=0;i<v.size()/2;i++){
+            ans+= min(v[i],minn*2);
+        }
+        return ans;
+
+    }
+};
