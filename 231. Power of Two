@@ -1,0 +1,9 @@
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        //  n & n-1 , 4=100 , 3=11 , overall = 0, thats why its used to determine
+        return (n>0) && ((n&(n-1))==0);
+    }
+};
+
+
