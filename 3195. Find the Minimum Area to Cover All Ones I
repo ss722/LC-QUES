@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int minimumArea(vector<vector<int>>& grid) {
+        int minr=INT_MAX,maxr=0,minc=INT_MAX,maxc=0;
+        int n=grid.size();
+        int m=grid[0].size();
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]){
+                minr = min(minr,i);
+                maxr = max(maxr,i);
+                minc = min(minc,j);
+                maxc = max(maxc,j);
+                }
+            }
+        }
+
+        return (maxr-minr+1)*(maxc-minc+1);
+
+    }
+};
