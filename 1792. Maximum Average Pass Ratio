@@ -1,0 +1,26 @@
+class Solution {
+public:
+    double diff(double a,double b){
+        return (double)((a+1.0)/(b+1.0) - a/b);
+    }
+    double maxAverageRatio(vector<vector<int>>& classes, int extraStudents) {
+        priority_queue<tuple<double,int,int>> pq;
+
+        for(auto &it:classes){
+            pq.push({diff(it[0],it[1]),it[0],it[1]});
+        }
+        while(extraStudents){
+            auto [dif,a,b] = pq.top();pq.pop();
+            a++;b++;
+            pq.push({diff(a,b),a,b});
+            extraStudents--;
+        }
+        double ans = 0;
+        while(!pq.empty()){
+           auto [dif,a,b] = pq.top();pq.pop();
+            ans += (double)a/b; 
+        }
+        return ans/classes.size();
+
+    }
+};
