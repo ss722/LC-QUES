@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string sortVowels(string s) {
+        string ans = s;
+        vector<int>  freq(128,0);
+        for(int i=0;i<s.size();i++){
+            if(s[i]=='A'||s[i]=='E'||s[i]=='I'||s[i]=='O'||s[i]=='U' || s[i]=='a'||s[i]=='e'||s                 [i]=='i'||s[i]=='o'||s[i]=='u') freq[s[i]]++;
+        }
+
+        int ind=0;
+        for(int i=0;i<s.size();i++){
+            if(s[i]=='A'||s[i]=='E'||s[i]=='I'||s[i]=='O'||s[i]=='U' || s[i]=='a'||s[i]=='e'||s[i]=='i'||s[i]=='o'||s[i]=='u') {
+                while(freq[ind] == 0){
+                    ind++;
+                }
+                ans[i] = (char)ind;
+                freq[ind]--;
+            }
+        }
+           
+        return ans;
+    }
+};
