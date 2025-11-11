@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int sizee;
+    int calc(int i,int m,int n , vector<string>& strs,vector<vector<vector<int>>> &dp){
+        if(i==-1){
+            return 0;
+        }
+        if(dp[i][m][n]!=-1) return dp[i][m][n];
+        int zero=0,one=0;
+        for(int ind=0;ind<strs[i].size();ind++){
+            if(strs[i][ind]=='0')zero++;
+            else one++;
+        }
+        int pick=0,notpick;
+        notpick = calc(i-1,m,n,strs,dp);
+        if(m>=zero && n>=one) pick = 1+calc(i-1,m-zero,n-one,strs,dp); 
+        return dp[i][m][n] = max(pick,notpick);
+
+    }
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        sizee = strs.size();
+        // vector<vector<vector<int>>> dp(sizee,vector<vector<int>>(101,vector<int>(101,-1)));
+        // return calc(sizee-1,m,n,strs,dp);
+
+        vector<vector<int>> dp(m+1,vector<int>(n+1,0));
+
+        for(int i=0;i<sizee;i++){
+            int zero=0,one=0;
+            for(int ind=0;ind<strs[i].size();ind++){
+                if(strs[i][ind]=='0')zero++;
+                else one++;
+            }
+            for(int j=m;j>=zero;j--){
+                for(int k=n;k>=one;k--){
+                    dp[j][k] = max(dp[j][k],1+dp[j-zero][k-one]);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+};
