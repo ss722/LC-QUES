@@ -1,0 +1,16 @@
+class Solution {
+public:
+    vector<bool> prefixesDivBy5(vector<int>& nums) {
+        vector<bool> ans;
+        int curr = 0;
+        int power = 0;
+        for(auto it:nums){
+            int num = 2*curr + it;
+            // cout<<num<<endl;
+            if(num%5==0) ans.push_back(true);
+            else ans.push_back(false);
+            curr=num%5;
+        }
+        return ans;
+    }
+};
