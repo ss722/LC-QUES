@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int numOfWays(int n) {
+        long long ans = 0;
+        long long MOD = 1e9 + 7;
+        long long twodiff = 6,threediff = 6;
+        for(int i=0;i<n-1;i++){
+           
+            long long a = twodiff*3 + threediff*2;
+            long long b = twodiff*2 + threediff*2;
+            twodiff = a%MOD;
+            threediff =b%MOD;
+        }
+        return (twodiff+threediff)%MOD;
+    }
+};
+
+
+// 3 DIff = 4 -> 2 (2 diff) , 2 (3 diff)
+// 2 Diff =   3 (2 diff) , 2 (3 diff)
