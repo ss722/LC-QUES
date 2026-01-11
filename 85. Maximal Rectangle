@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int find(vector<int> &v){
+        int m = v.size();
+        stack<int> s;
+        int ans = 0;
+        for(int i=0;i<=m;i++){
+            while(!s.empty() && (i==m || v[s.top()] >= v[i])){
+                int curr = s.top();s.pop();
+                int len;
+                if(s.empty()) len = i;
+                else len = i-s.top()-1;
+                ans = max(ans,v[curr]*len);
+            }
+            s.push(i);
+        }
+        return ans;
+
+    }
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        int n=matrix.size();
+        int m=matrix[0].size();
+        vector<int> v(m,0);
+
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(matrix[i][j]=='1') v[j]+=1;
+                else v[j]=0;
+            }
+            ans = max(ans,find(v));
+        }
+        return ans;
+    }
+};
