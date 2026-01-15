@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int maximizeSquareHoleArea(int n, int m, vector<int>& hBars, vector<int>& vBars) {\
+        sort(begin(hBars),end(hBars));
+        sort(begin(vBars),end(vBars));
+        int cnt1=1;
+        int maxx1=1;
+        for(int i=1;i<hBars.size();i++){
+            if(hBars[i-1] == hBars[i]-1) cnt1++;
+            else cnt1=1;
+            maxx1 = max(maxx1,cnt1);
+        }
+        int cnt2=1;
+        int maxx2=1;
+        for(int i=1;i<vBars.size();i++){
+            if(vBars[i-1] == vBars[i]-1) cnt2++;
+            else cnt2=1;
+            maxx2 = max(maxx2,cnt2);
+        }
+        // cout<<maxx1<<" "<<maxx2<<endl;
+        int val = min(maxx1,maxx2);
+        return (val+1)*(val+1);
+    }
+};
