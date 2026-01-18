@@ -1,0 +1,81 @@
+class Solution {
+public:
+    int ans = 1;
+    int m,n;
+    void check(int x1,int y1,int x2,int y2,vector<vector<int>>& grid,vector<vector<int>>& prerow,vector<vector<int>>& precol){
+        int size = -1;
+        bool flag = true;
+        if(ans >= x2-x1+1) return;
+        for(int i=x1;i<=x2;i++){
+            int curr = 0;
+            // for(int j=y1;j<=y2;j++) curr+= grid[i][j];
+            curr = prerow[i][y2] - (y1==0 ? 0 : prerow[i][y1-1]);
+            if(size==-1) size=curr;
+            if(curr!=size){
+                flag = false;
+                break;
+            }
+            
+        }
+        if(!flag ) return;
+        flag = true;
+        for(int i=y1;i<=y2;i++){
+            int curr = 0;
+            // for(int j=x1;j<=x2;j++) curr+=grid[j][i];
+           curr = precol[x2][i] - (x1==0 ? 0: precol[x1-1][i]); 
+            if(curr!=size){
+                flag = false;
+                break;
+            }
+        }
+        if(!flag ) return;
+        flag = true;
+
+        int diag1=0;
+        for(int i=x1,j=y1;i<=x2 && j<=y2;i++,j++) diag1+= grid[i][j];
+        
+        if(diag1!=size) return;
+        
+        int diag2=0;
+        for(int i=x1,j=y2;i<=x2 && j>=y1; i++,j-- ) diag2+=grid[i][j];
+        
+        if(diag2!=size) return;
+
+        ans = max(ans,x2-x1+1);
+
+    }
+    int largestMagicSquare(vector<vector<int>>& grid) {
+        m=grid.size();
+        n=grid[0].size();
+        vector<vector<int>> prerow(m,vector<int>(n,0));
+        vector<vector<int>> precol(m,vector<int>(n,0));
+
+        for(int i=0;i<m;i++){
+            prerow[i][0]=grid[i][0];
+            for(int j=1;j<n;j++){
+                prerow[i][j] = grid[i][j]+prerow[i][j-1];
+            }
+        }
+        for(int j=0;j<n;j++){
+            precol[0][j] =grid[0][j];
+            for(int i=1;i<m;i++){
+                precol[i][j] = grid[i][j]+precol[i-1][j];
+            }
+
+        }
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                int currx=i+1;
+                int curry=j+1;
+                while(currx<m && curry<n){
+                    check(i,j,currx,curry,grid,prerow,precol);
+                    currx++;
+                    curry++;
+                }
+            }
+        }
+        return ans;
+
+    }
+};
