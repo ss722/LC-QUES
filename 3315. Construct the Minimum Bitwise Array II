@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> minBitwiseArray(vector<int>& nums) {
+        vector<int> ans;
+
+        for(auto it:nums){
+            if(it==2){
+                ans.push_back(-1);
+                continue;
+            }
+            for(int j=0;j<32;j++){
+                if((it&(1<<j)) > 0) continue;
+                int val = it^(1<< (j-1));
+                ans.push_back(val);
+                break;
+            }
+        }
+        return ans;
+    }
+};
+// Checking first 0
+// then pick element before it that is 1
+// make it 0 , then push in array
