@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool isTrionic(vector<int>& nums) {
+        int stage=0;
+    
+        for(int i=1;i<nums.size();i++){
+
+            if(nums[i]==nums[i-1]) return false;
+            if(stage==0 && nums[i]>nums[i-1]) stage++;
+            else if(stage==0 && nums[i]<nums[i-1]) return false;
+            else if(stage==1 && nums[i] < nums[i-1]) stage++;
+            else if(stage==2 && nums[i] > nums[i-1]) stage++;
+            else if(stage==3 && nums[i] < nums[i-1]) return false;
+        }
+        return stage==3;
+    }
+};
