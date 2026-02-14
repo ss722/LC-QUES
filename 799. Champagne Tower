@@ -1,0 +1,23 @@
+class Solution {
+public:
+    double champagneTower(int poured, int query_row, int query_glass) {
+        double total = poured;
+        vector<vector<double>> v(query_row+1,vector<double>(query_row+1,0));
+        int n = query_row+1;
+        v[0][0]=total;
+        for(int i=0;i<n-1;i++){
+            for(int j=0;j<=i;j++){
+                int left = j;
+                int right = j+1;
+                double half=0.0;
+                if(v[i][j]>1){
+                    half = (v[i][j]-1)/2.0;
+                }
+                v[i+1][left] += half;
+                v[i+1][right] += half;
+            }
+        }
+        if(v[query_row][query_glass]>=1) return 1.00000;
+        else return v[query_row][query_glass];
+    }
+};
