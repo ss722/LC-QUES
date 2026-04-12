@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int n;
+    int f(int ind,int f1,int f2,string &word,vector<vector<vector<int>>> &dp){
+        if(ind==n) return 0;
+
+        if(dp[ind][f1][f2]!=-1) return dp[ind][f1][f2];
+        int curr = (int)(word[ind]-'A');
+        int nx = curr/6,ny= curr%6;
+        int x1 = f1 / 6, y1 = f1 % 6;
+        int x2 = f2 / 6, y2 = f2 % 6;
+        if(f1==28) { x1 = nx; y1 = ny; }
+        if(f2==28) { x2 = nx; y2 = ny; }
+        int first = abs(nx-x1) + abs(ny-y1) + f(ind+1,curr,f2,word,dp);
+        int second = abs(nx-x2) + abs(ny-y2) + f(ind+1,f1,curr,word,dp);
+
+        return dp[ind][f1][f2] = min(first,second);
+    }
+    int minimumDistance(string word) {
+        n=word.size();
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(30,vector<int>(30,-1)));
+        return f(0,28,28,word,dp);
+    }
+};
